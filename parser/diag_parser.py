@@ -15,7 +15,7 @@ DIAG_LOGFILE_PREFIX = "diagnostics-"
 DIAG_LOGFILE_TS_FORMAT = '%d-%m-%Y %H:%M:%S'
 DIAG_LOGFILE_METRICS_PLUGIN_SECTION_TAG = " Metrics["
 
-KEY_FORMAT_RULES = OrderedDict({
+METRIC_KEY_FORMAT_RULES = OrderedDict({
     '[': '',
     ']': '',
     '->': '.',
@@ -102,18 +102,18 @@ class DiagParser(object):
 
             # Clean up keys and values - order matters
             key = key.strip(' ')
-            # key = key.replace('[', '')
-            # key = key.replace(']', '')
-            # key = key.replace('->', '.')
-            # key = key.replace('/', '.')
-            # key = key.replace('..', '.')
-            #
-            # key = re.sub(r'(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3}):(\d{2,5})', r'\1_\2_\3_\4_\5', key)
-            # key = key.replace(':', '_')
+            key = key.replace('[', '')
+            key = key.replace(']', '')
+            key = key.replace('->', '.')
+            key = key.replace('/', '.')
+            key = key.replace('..', '.')
 
-            for rule, replacement in KEY_FORMAT_RULES.iteritems():
-                if re.
-                key = key.replace(rule, replacement)
+            key = re.sub(r'(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3}):(\d{2,5})', r'\1_\2_\3_\4_\5', key)
+            key = key.replace(':', '_')
+
+            # for rule, replacement in KEY_FORMAT_RULES.iteritems():
+            #     if re.
+            #     key = key.replace(rule, replacement)
 
             value = value.strip(' ')
             value = value.replace("]", "")
