@@ -3,20 +3,22 @@ import os
 import time
 import argparse
 
+from datetime import datetime
 from pathlib import Path
 from influxdb import InfluxDBClient
 
 SCANNED_DIR_MARKER = '.diag_viewer_done'
 DIAG_LOGFILE_EXT = ".log"
 DIAG_LOGFILE_PREFIX = "diagnostics-"
-TS_FORMAT = '%d-%m-%Y %H:%M:%S'
+LOG_TS_FORMAT = '%d-%m-%Y %H:%M:%S'
+INFLUX_TS_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 METRIC_LINE = " Metric["
 
 
 class DiagParser(object):
 
     def __init__(self, root_dir: str, recursive: bool, db_host: str, db_port: int, db_name: str,
-                 force: bool, batch_size: int):
+                 force: bool, batch_size: int, import_id: str, normalize: bool):
         self.root_dir = root_dir
         self.recursive = recursive
         self.processed_metrics_count = 0
@@ -25,11 +27,13 @@ class DiagParser(object):
         self.db_host = db_host
         self.db_port = db_port
         self.db_name = db_name
+        self.import_id = import_id
+        self.normalize = normalize
 
         self.client = None
         self.queue = []
 
-    def try_process_diagnostics(self):
+    def run(self):
         try:
             self.client = InfluxDBClient(host=self.db_host, port=self.db_port)
             print("Connected to InfluxDB")
@@ -41,7 +45,7 @@ class DiagParser(object):
             print("Switching database ", self.db_name)
             self.client.switch_database(self.db_name)
 
-            self._scan_dir(self.root_dir)
+            self._try_dir(self.root_dir)
             self.flush()
             print("Finished, processed metrics: ", self.processed_metrics_count)
         except RuntimeError as e:
@@ -54,18 +58,21 @@ class DiagParser(object):
         self.client.write_points(self.queue)
         self.queue.clear()
 
-    def _scan_dir(self, dir_path):
+    def _try_dir(self, dir_path):
         if not self.force and SCANNED_DIR_MARKER in os.listdir(dir_path):
             print("Skipped ", dir_path)
             return
 
-        print("Scanning dir ", dir_path)
+        print("Trying dir ", dir_path)
         for log in (f for f in os.listdir(dir_path)
                     if f.startswith(DIAG_LOGFILE_PREFIX) and f.endswith(DIAG_LOGFILE_EXT)):
             f = os.path.join(dir_path, log)
             print("Found ", f)
-            with open(f, 'r') as trace_lines:
-                self._process_file(dir_path.split("/")[-2], log, enumerate(trace_lines))
+            try:
+                with open(f, 'r') as trace_lines:
+                    self._process_file(dir_path.split("/")[-2], log, enumerate(trace_lines))
+            except PermissionError as e:
+                print(e)
 
         if self.recursive:
             for path in (os.path.join(dir_path, f) for f in os.listdir(dir_path)):
@@ -73,22 +80,25 @@ class DiagParser(object):
                     continue
 
                 sub_dir = path
-                # pre-mark it so duplicates shouldn't happen
-                Path(os.path.join(sub_dir, SCANNED_DIR_MARKER)).touch()
-                self._scan_dir(sub_dir)
+                try:
+                    self._try_dir(sub_dir)
+                    # mark it so duplicates shouldn't happen
+                    Path(os.path.join(sub_dir, SCANNED_DIR_MARKER)).touch()
+                except PermissionError as e:
+                    print(e)
 
     def _process_file(self, benchmark_id, log, lines_enumerator):
         for i, line in lines_enumerator:
             try:
                 if METRIC_LINE in line:
                     nodename, timestamp, tags, value = self._parse_metric_line(log, line)
+                    self._push_metric(benchmark_id, nodename, timestamp, tags, value)
 
-                self._push_metric(benchmark_id, nodename, timestamp, tags, value)
                 self.processed_metrics_count += 1
             except Exception as e:
                 print("Problem sending metric ", log, line)
                 print(e)
-                
+
     def _parse_metric_line(self, log_file, line):
         timestamp = DiagParser.extract_timestamp(line)
         nodename = DiagParser.extract_node_name(log_file)
@@ -121,7 +131,7 @@ class DiagParser(object):
 
         payload = dict()
         payload['measurement'] = measurement
-        payload['time'] = timestamp
+        payload['time'] = timestamp if not self.normalize else DiagParser.normalize_timestamp(timestamp)
 
         fields = dict()
         fields[meta.get('unit', 'count')] = value
@@ -133,6 +143,7 @@ class DiagParser(object):
 
         tags['benchmark'] = benchmark_id
         tags['node'] = node_name
+        tags['import_id'] = self.import_id
         payload['tags'] = tags
 
         self.queue.append(payload)
@@ -143,8 +154,16 @@ class DiagParser(object):
     def extract_timestamp(trace):
         timestamp = trace[0:20].strip(' ')
         # 2018-03-28T8:01:00Z
-        time_tuple = time.strptime(timestamp, TS_FORMAT)
-        return time.strftime("%Y-%m-%dT%H:%M:%SZ", time_tuple)
+        time_tuple = time.strptime(timestamp, LOG_TS_FORMAT)
+        return time.strftime(INFLUX_TS_FORMAT, time_tuple)
+
+    @staticmethod
+    def normalize_timestamp(timestamp):
+        fixed_date = datetime.fromisoformat('2020-01-01')
+        imported_date = datetime.strptime(timestamp, INFLUX_TS_FORMAT)
+        fixed_date = fixed_date.replace(hour=12, minute=imported_date.minute,
+                                        second=imported_date.second, microsecond=imported_date.microsecond)
+        return time.strftime(INFLUX_TS_FORMAT, fixed_date.timetuple())
 
     @staticmethod
     def extract_node_name(filename):
@@ -166,10 +185,15 @@ parser.add_argument('--db_name', nargs='?', default='diagnostics',
                     help='InfluxDB database name, it will be created if it doesn\'t exist')
 parser.add_argument('--batch_size', nargs='?', default=1000, type=int,
                     help='how many metrics will be batched together before they are flushed to the DB')
+parser.add_argument('--import_id', nargs='?', default=time.time_ns(), type=str,
+                    help='an import identified to filter multiple imports of the same data')
+parser.add_argument('--normalize', default=False, action='store_true',
+                    help='normalize benchmark dates to a fixed date, making time range selection easier')
 
 args = parser.parse_args()
 
 parser = DiagParser(root_dir=args.dir, recursive=args.recursive, db_host=args.db_host, db_port=args.db_port,
-                    force=args.force, db_name=args.db_name, batch_size=args.batch_size)
-parser.try_process_diagnostics()
+                    force=args.force, db_name=args.db_name, batch_size=args.batch_size, import_id=args.import_id,
+                    normalize=args.normalize)
+parser.run()
 
