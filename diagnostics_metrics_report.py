@@ -88,16 +88,38 @@ class DiagParser(object):
                     print(e)
 
     def _process_file(self, benchmark_id, log, lines_enumerator):
+        cycle = {}
+        RUN = lambda cycle: (
+            self._apply_transformations(cycle),
+            self._push_collection(benchmark_id, cycle))
+
         for i, line in lines_enumerator:
             try:
                 if METRIC_LINE in line:
-                    nodename, timestamp, tags, value = self._parse_metric_line(log, line)
-                    self._push_metric(benchmark_id, nodename, timestamp, tags, value)
+                    nodename, timestamp, meta, value = self._parse_metric_line(log, line)
+                    if not cycle.get('tick'):
+                        cycle['tick'] = timestamp
+
+                    if timestamp != cycle['tick']:
+                        RUN(cycle)
+                        cycle = {}
+                    else:
+                        self._group_metric_with_same_timestamp(cycle, nodename, timestamp, meta, value)
 
                 self.processed_metrics_count += 1
             except Exception as e:
                 print("Problem sending metric ", log, line)
                 print(e)
+
+        # Remaining
+        try:
+            if len(cycle) is 0:
+                return
+
+            RUN(cycle)
+        except Exception as e:
+            print("Problem sending metric ", log, line)
+            print(e)
 
     def _parse_metric_line(self, log_file, line):
         timestamp = DiagParser.extract_timestamp(line)
@@ -107,9 +129,30 @@ class DiagParser(object):
         # unit=count,metric=operation.thread.priorityPendingCount]=0]
         metric_tags_end = line.index(']=')
         tags_str = line[42:metric_tags_end].split(',')
-        tags = dict((entry.split('=') for entry in tags_str))
-        value = line[metric_tags_end + 2:line.index(']', metric_tags_end + 1)]
-        return nodename, timestamp, tags, value
+        meta = dict((entry.split('=') for entry in tags_str))
+        value = float(line[metric_tags_end + 2:line.index(']', metric_tags_end + 1)])
+        return nodename, timestamp, meta, value
+
+    def _group_metric_with_same_timestamp(self, cycle, nodename, timestamp, meta, value):
+        measurement = meta['metric']
+        cycle[measurement] = (nodename, timestamp, meta, value)
+
+    def _apply_transformations(self, cycle):
+        if 'wan.totalPublishLatency' in cycle and 'wan.totalPublishedEventCount' in cycle:
+            nodename, _, _, total_pub_latency = cycle['wan.totalPublishLatency']
+            _, _, _, total_pub_count = cycle['wan.totalPublishedEventCount']
+            if total_pub_count and total_pub_latency:
+                value = total_pub_latency / total_pub_count
+                meta = {'unit': 'avg', 'metric': 'wan.publishLatencyAvg'}
+                cycle['wan.publishLatencyAvg'] = (nodename, cycle['tick'], meta, value)
+
+
+    def _push_collection(self, benchmark_id, cycle):
+        for entry in cycle:
+            # Ignore the timestamp entry, its not a metric
+            if entry is not "tick":
+                node_name, timestamp, meta, value = cycle[entry]
+                self._push_metric(benchmark_id, node_name, timestamp, meta, value)
 
     def _push_metric(self, benchmark_id, node_name, timestamp, meta, value):
         # Sample output
