@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:34",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -17,10 +16,24 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1594227809155,
+  "iteration": 1594368641857,
   "links": [],
   "panels": [
     {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 23,
+      "panels": [],
+      "title": "Target",
+      "type": "row"
+    },
+    {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
@@ -30,6 +43,12 @@
         "#d44a3a"
       ],
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -42,443 +61,7 @@
         "h": 3,
         "w": 2,
         "x": 0,
-        "y": 0
-      },
-      "id": 10,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "$$hashKey": "object:2307",
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "$$hashKey": "object:2308",
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "pluginVersion": "6.7.3",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "partitions.partitionCount",
-          "orderByTime": "ASC",
-          "policy": "autogen",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "count"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "benchmark",
-              "operator": "=~",
-              "value": "/^$WAN_Source$/"
-            },
-            {
-              "condition": "AND",
-              "key": "import_id",
-              "operator": "=~",
-              "value": "/^$Import$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Partitions",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "$$hashKey": "object:2310",
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 8,
-        "y": 0
-      },
-      "id": 11,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "$$hashKey": "object:2307",
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "$$hashKey": "object:2308",
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "pluginVersion": "6.7.3",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "partitions.totalCompletedMigrations",
-          "orderByTime": "ASC",
-          "policy": "autogen",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "count"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "benchmark",
-              "operator": "=~",
-              "value": "/^$WAN_Source$/"
-            },
-            {
-              "condition": "AND",
-              "key": "import_id",
-              "operator": "=~",
-              "value": "/^$Import$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Completed Migrations",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "$$hashKey": "object:2310",
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "format": "short",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 16,
-        "y": 0
-      },
-      "id": 12,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "$$hashKey": "object:2307",
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "$$hashKey": "object:2308",
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "pluginVersion": "6.7.3",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "map.entryCount",
-          "orderByTime": "ASC",
-          "policy": "autogen",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "count"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "benchmark",
-              "operator": "=~",
-              "value": "/^$WAN_Source$/"
-            },
-            {
-              "condition": "AND",
-              "key": "import_id",
-              "operator": "=~",
-              "value": "/^$Import$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Map Entry Count",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "$$hashKey": "object:2310",
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 18,
-        "y": 0
-      },
-      "id": 13,
-      "links": [],
-      "options": {
-        "displayMode": "basic",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "defaults": {
-            "mappings": [
-              {
-                "$$hashKey": "object:2310",
-                "id": 0,
-                "op": "=",
-                "text": "N/A",
-                "type": 1,
-                "value": "null"
-              }
-            ],
-            "nullValueMode": "connected",
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "decbytes"
-          },
-          "overrides": [],
-          "values": false
-        },
-        "orientation": "vertical",
-        "showUnfilled": true
-      },
-      "pluginVersion": "6.7.3",
-      "targets": [
-        {
-          "alias": "-",
-          "groupBy": [
-            {
-              "params": [
-                "node"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "map.ownedEntryMemoryCost",
-          "orderByTime": "ASC",
-          "policy": "autogen",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "bytes"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "benchmark",
-              "operator": "=~",
-              "value": "/^$WAN_Source$/"
-            },
-            {
-              "condition": "AND",
-              "key": "import_id",
-              "operator": "=~",
-              "value": "/^$Import$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Map Entry Cost",
-      "type": "bargauge"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 0,
-        "y": 3
+        "y": 1
       },
       "id": 16,
       "interval": null,
@@ -486,12 +69,10 @@
       "mappingType": 1,
       "mappingTypes": [
         {
-          "$$hashKey": "object:2307",
           "name": "value to text",
           "value": 1
         },
         {
-          "$$hashKey": "object:2308",
           "name": "range to text",
           "value": 2
         }
@@ -561,7 +142,6 @@
       "valueFontSize": "80%",
       "valueMaps": [
         {
-          "$$hashKey": "object:2310",
           "op": "=",
           "text": "N/A",
           "value": "null"
@@ -579,119 +159,12 @@
         "#d44a3a"
       ],
       "datasource": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 8,
-        "y": 3
-      },
-      "id": 15,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "$$hashKey": "object:2307",
-          "name": "value to text",
-          "value": 1
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
         },
-        {
-          "$$hashKey": "object:2308",
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "pluginVersion": "6.7.3",
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false,
-        "ymax": null,
-        "ymin": null
+        "overrides": []
       },
-      "tableColumn": "",
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "partitions.totalCompletedMigrations",
-          "orderByTime": "ASC",
-          "policy": "autogen",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "count"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "benchmark",
-              "operator": "=~",
-              "value": "/^$WAN_Target$/"
-            },
-            {
-              "condition": "AND",
-              "key": "import_id",
-              "operator": "=~",
-              "value": "/^$Import$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Completed Migrations",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "$$hashKey": "object:2310",
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
       "format": "short",
       "gauge": {
         "maxValue": 100,
@@ -703,8 +176,8 @@
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 16,
-        "y": 3
+        "x": 2,
+        "y": 1
       },
       "id": 17,
       "interval": null,
@@ -712,12 +185,10 @@
       "mappingType": 1,
       "mappingTypes": [
         {
-          "$$hashKey": "object:2307",
           "name": "value to text",
           "value": 1
         },
         {
-          "$$hashKey": "object:2308",
           "name": "range to text",
           "value": 2
         }
@@ -787,7 +258,6 @@
       "valueFontSize": "80%",
       "valueMaps": [
         {
-          "$$hashKey": "object:2310",
           "op": "=",
           "text": "N/A",
           "value": "null"
@@ -798,54 +268,57 @@
     {
       "cacheTimeout": null,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 18,
-        "y": 3
+        "x": 4,
+        "y": 1
       },
       "id": 14,
       "links": [],
       "options": {
         "displayMode": "basic",
-        "fieldOptions": {
+        "orientation": "vertical",
+        "reduceOptions": {
           "calcs": [
             "lastNotNull"
           ],
-          "defaults": {
-            "mappings": [
-              {
-                "$$hashKey": "object:2310",
-                "id": 0,
-                "op": "=",
-                "text": "N/A",
-                "type": 1,
-                "value": "null"
-              }
-            ],
-            "nullValueMode": "connected",
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "decbytes"
-          },
-          "overrides": [],
+          "fields": "",
           "values": false
         },
-        "orientation": "vertical",
         "showUnfilled": true
       },
-      "pluginVersion": "6.7.3",
+      "pluginVersion": "7.0.6",
       "targets": [
         {
           "alias": "-",
@@ -893,18 +366,1392 @@
       "type": "bargauge"
     },
     {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 12,
+        "y": 1
+      },
+      "id": 15,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "pluginVersion": "6.7.3",
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "partitions.totalCompletedMigrations",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Target$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Completed Migrations",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "hiddenSeries": false,
+      "id": 25,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "node"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "memory.usedHeap",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "bytes"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Target$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Used Heap",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "decbytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "hiddenSeries": false,
+      "id": 27,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "7.0.6",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "node"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "map.merkleTreesCost",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Target$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Merkle Tree Cost",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 6,
+        "y": 12
+      },
+      "hiddenSeries": false,
+      "id": 19,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "node"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "map.entryCount",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Target$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "WAN Target Map Entry Count",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 21,
+      "panels": [],
+      "title": "Source",
+      "type": "row"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 0,
+        "y": 21
+      },
+      "id": 10,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "pluginVersion": "6.7.3",
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "partitions.partitionCount",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Source$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Partitions",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "short",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 2,
+        "y": 21
+      },
+      "id": 12,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "pluginVersion": "6.7.3",
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "map.entryCount",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Source$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Map Entry Count",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 4,
+        "y": 21
+      },
+      "id": 13,
+      "links": [],
+      "options": {
+        "displayMode": "basic",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "alias": "-",
+          "groupBy": [
+            {
+              "params": [
+                "node"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "map.ownedEntryMemoryCost",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "bytes"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Source$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Map Entry Cost",
+      "type": "bargauge"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 12,
+        "y": 21
+      },
+      "id": 11,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "pluginVersion": "6.7.3",
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "partitions.totalCompletedMigrations",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Source$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Completed Migrations",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "hiddenSeries": false,
+      "id": 26,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "node"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "memory.usedHeap",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "bytes"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Source$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Used Heap",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "decbytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "hiddenSeries": false,
+      "id": 28,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "7.0.6",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "node"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "map.merkleTreesCost",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Source$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Merkle Tree Cost",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 6,
+        "y": 33
+      },
+      "hiddenSeries": false,
+      "id": 18,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "node"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "map.entryCount",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "benchmark",
+              "operator": "=~",
+              "value": "/^$WAN_Source$/"
+            },
+            {
+              "condition": "AND",
+              "key": "import_id",
+              "operator": "=~",
+              "value": "/^$Import$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "WAN Source Map Entry Count",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "aliasColors": {},
       "bars": true,
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 6
+        "y": 42
       },
       "hiddenSeries": false,
       "id": 3,
@@ -991,7 +1838,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1115",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1000,7 +1846,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1116",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1020,13 +1865,19 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
-      "fill": 1,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 6
+        "y": 42
       },
       "hiddenSeries": false,
       "id": 8,
@@ -1113,7 +1964,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1115",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1122,7 +1972,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1116",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1142,13 +1991,19 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 6
+        "y": 42
       },
       "hiddenSeries": false,
       "id": 6,
@@ -1235,7 +2090,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1115",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1244,7 +2098,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1116",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1264,13 +2117,19 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 15
+        "y": 51
       },
       "hiddenSeries": false,
       "id": 4,
@@ -1295,7 +2154,7 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": false,
+      "stack": true,
       "steppedLine": false,
       "targets": [
         {
@@ -1343,7 +2202,7 @@
       "timeShift": null,
       "title": "WAN Dropped count",
       "tooltip": {
-        "shared": true,
+        "shared": false,
         "sort": 0,
         "value_type": "individual"
       },
@@ -1357,7 +2216,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1115",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1366,7 +2224,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1116",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1386,13 +2243,19 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
-      "fill": 1,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 15
+        "y": 51
       },
       "hiddenSeries": false,
       "id": 5,
@@ -1479,7 +2342,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1115",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1488,7 +2350,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1116",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1508,13 +2369,19 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
-      "fill": 1,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 60
       },
       "hiddenSeries": false,
       "id": 7,
@@ -1601,7 +2468,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1115",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1610,7 +2476,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1116",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1629,14 +2494,34 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fill": 1,
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 0,
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 60
       },
       "hiddenSeries": false,
       "id": 2,
@@ -1656,15 +2541,17 @@
         "dataLinks": []
       },
       "percentage": false,
+      "pluginVersion": "7.0.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
-      "steppedLine": false,
+      "steppedLine": true,
       "targets": [
         {
+          "alias": "",
           "groupBy": [
             {
               "params": [
@@ -1673,7 +2560,8 @@
               "type": "tag"
             }
           ],
-          "measurement": "wan.totalPublishLatency",
+          "limit": "",
+          "measurement": "wan.publishLatencyAvg",
           "orderByTime": "ASC",
           "policy": "autogen",
           "refId": "A",
@@ -1682,7 +2570,7 @@
             [
               {
                 "params": [
-                  "ms"
+                  "avg"
                 ],
                 "type": "field"
               }
@@ -1723,7 +2611,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1115",
           "format": "ms",
           "label": null,
           "logBase": 1,
@@ -1732,7 +2619,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1116",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1748,7 +2634,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 22,
+  "schemaVersion": 25,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1756,29 +2642,20 @@
       {
         "allValue": null,
         "current": {
-          "$$hashKey": "object:723",
-          "selected": true,
-          "text": "8",
-          "value": "8"
+          "selected": false,
+          "text": "1",
+          "value": "1"
         },
         "datasource": "InfluxDB",
         "definition": "SHOW TAG VALUES WITH KEY = import_id",
         "hide": 0,
         "includeAll": false,
-        "index": -1,
         "label": null,
         "multi": false,
         "name": "Import",
-        "options": [
-          {
-            "$$hashKey": "object:723",
-            "selected": true,
-            "text": "8",
-            "value": "8"
-          }
-        ],
+        "options": [],
         "query": "SHOW TAG VALUES WITH KEY = import_id",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1791,7 +2668,7 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
+          "selected": false,
           "text": "2020-07-07__23_19_59",
           "value": "2020-07-07__23_19_59"
         },
@@ -1799,92 +2676,12 @@
         "definition": "SHOW TAG VALUES WITH KEY = benchmark",
         "hide": 0,
         "includeAll": false,
-        "index": -1,
         "label": null,
         "multi": false,
         "name": "WAN_Source",
-        "options": [
-          {
-            "$$hashKey": "object:475",
-            "selected": false,
-            "text": "2020-07-07__16_22_03",
-            "value": "2020-07-07__16_22_03"
-          },
-          {
-            "$$hashKey": "object:476",
-            "selected": false,
-            "text": "2020-07-07__16_32_51",
-            "value": "2020-07-07__16_32_51"
-          },
-          {
-            "$$hashKey": "object:477",
-            "selected": false,
-            "text": "2020-07-07__16_35_31",
-            "value": "2020-07-07__16_35_31"
-          },
-          {
-            "$$hashKey": "object:478",
-            "selected": false,
-            "text": "2020-07-07__16_41_45",
-            "value": "2020-07-07__16_41_45"
-          },
-          {
-            "$$hashKey": "object:479",
-            "selected": false,
-            "text": "2020-07-07__18_41_55",
-            "value": "2020-07-07__18_41_55"
-          },
-          {
-            "$$hashKey": "object:480",
-            "selected": false,
-            "text": "2020-07-07__20_51_31",
-            "value": "2020-07-07__20_51_31"
-          },
-          {
-            "$$hashKey": "object:481",
-            "selected": false,
-            "text": "2020-07-07__21_04_42",
-            "value": "2020-07-07__21_04_42"
-          },
-          {
-            "$$hashKey": "object:482",
-            "selected": false,
-            "text": "2020-07-07__21_43_07",
-            "value": "2020-07-07__21_43_07"
-          },
-          {
-            "$$hashKey": "object:483",
-            "selected": false,
-            "text": "2020-07-07__21_48_15",
-            "value": "2020-07-07__21_48_15"
-          },
-          {
-            "$$hashKey": "object:484",
-            "selected": false,
-            "text": "2020-07-07__22_57_42",
-            "value": "2020-07-07__22_57_42"
-          },
-          {
-            "$$hashKey": "object:485",
-            "selected": false,
-            "text": "2020-07-07__23_00_00",
-            "value": "2020-07-07__23_00_00"
-          },
-          {
-            "$$hashKey": "object:486",
-            "selected": false,
-            "text": "2020-07-07__23_08_47",
-            "value": "2020-07-07__23_08_47"
-          },
-          {
-            "$$hashKey": "object:487",
-            "selected": true,
-            "text": "2020-07-07__23_19_59",
-            "value": "2020-07-07__23_19_59"
-          }
-        ],
+        "options": [],
         "query": "SHOW TAG VALUES WITH KEY = benchmark",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1897,7 +2694,7 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
+          "selected": false,
           "text": "2020-07-07__23_08_47",
           "value": "2020-07-07__23_08_47"
         },
@@ -1905,92 +2702,12 @@
         "definition": "SHOW TAG VALUES WITH KEY = benchmark",
         "hide": 0,
         "includeAll": false,
-        "index": -1,
         "label": null,
         "multi": false,
         "name": "WAN_Target",
-        "options": [
-          {
-            "$$hashKey": "object:547",
-            "selected": false,
-            "text": "2020-07-07__16_22_03",
-            "value": "2020-07-07__16_22_03"
-          },
-          {
-            "$$hashKey": "object:548",
-            "selected": false,
-            "text": "2020-07-07__16_32_51",
-            "value": "2020-07-07__16_32_51"
-          },
-          {
-            "$$hashKey": "object:549",
-            "selected": false,
-            "text": "2020-07-07__16_35_31",
-            "value": "2020-07-07__16_35_31"
-          },
-          {
-            "$$hashKey": "object:550",
-            "selected": false,
-            "text": "2020-07-07__16_41_45",
-            "value": "2020-07-07__16_41_45"
-          },
-          {
-            "$$hashKey": "object:551",
-            "selected": false,
-            "text": "2020-07-07__18_41_55",
-            "value": "2020-07-07__18_41_55"
-          },
-          {
-            "$$hashKey": "object:552",
-            "selected": false,
-            "text": "2020-07-07__20_51_31",
-            "value": "2020-07-07__20_51_31"
-          },
-          {
-            "$$hashKey": "object:553",
-            "selected": false,
-            "text": "2020-07-07__21_04_42",
-            "value": "2020-07-07__21_04_42"
-          },
-          {
-            "$$hashKey": "object:554",
-            "selected": false,
-            "text": "2020-07-07__21_43_07",
-            "value": "2020-07-07__21_43_07"
-          },
-          {
-            "$$hashKey": "object:555",
-            "selected": false,
-            "text": "2020-07-07__21_48_15",
-            "value": "2020-07-07__21_48_15"
-          },
-          {
-            "$$hashKey": "object:556",
-            "selected": false,
-            "text": "2020-07-07__22_57_42",
-            "value": "2020-07-07__22_57_42"
-          },
-          {
-            "$$hashKey": "object:557",
-            "selected": false,
-            "text": "2020-07-07__23_00_00",
-            "value": "2020-07-07__23_00_00"
-          },
-          {
-            "$$hashKey": "object:558",
-            "selected": true,
-            "text": "2020-07-07__23_08_47",
-            "value": "2020-07-07__23_08_47"
-          },
-          {
-            "$$hashKey": "object:559",
-            "selected": false,
-            "text": "2020-07-07__23_19_59",
-            "value": "2020-07-07__23_19_59"
-          }
-        ],
+        "options": [],
         "query": "SHOW TAG VALUES WITH KEY = benchmark",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -2003,13 +2720,12 @@
     ]
   },
   "time": {
-    "from": "2020-07-07T22:17:49.215Z",
-    "to": "2020-07-07T22:45:20.979Z"
+    "from": "2020-07-07T21:59:37.405Z",
+    "to": "2020-07-07T23:11:57.684Z"
   },
   "timepicker": {
-    "hidden": true,
+    "hidden": false,
     "refresh_intervals": [
-      "5s",
       "10s",
       "30s",
       "1m",
@@ -2024,8 +2740,5 @@
   "timezone": "",
   "title": "WAN",
   "uid": "15RhHlMGk",
-  "variables": {
-    "list": []
-  },
-  "version": 16
+  "version": 7
 }
