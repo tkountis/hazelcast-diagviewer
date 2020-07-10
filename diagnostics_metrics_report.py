@@ -1,7 +1,7 @@
-
 import os
 import time
 import argparse
+import csv
 
 from datetime import datetime
 from pathlib import Path
@@ -10,6 +10,7 @@ from influxdb import InfluxDBClient
 SCANNED_DIR_MARKER = '.diag_viewer_done'
 DIAG_LOGFILE_EXT = ".log"
 DIAG_LOGFILE_PREFIX = "diagnostics-"
+DSTAT_LOGFILE_EXT = "_dstat.csv"
 LOG_TS_FORMAT = '%d-%m-%Y %H:%M:%S'
 INFLUX_TS_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 METRIC_LINE = " Metric["
@@ -17,10 +18,11 @@ METRIC_LINE = " Metric["
 
 class DiagParser(object):
 
-    def __init__(self, root_dir: str, recursive: bool, db_host: str, db_port: int, db_name: str,
+    def __init__(self, root_dir: str, recursive: bool, dstat: bool, db_host: str, db_port: int, db_name: str,
                  force: bool, batch_size: int, import_id: str, normalize: bool):
         self.root_dir = root_dir
         self.recursive = recursive
+        self.dstat = dstat
         self.processed_metrics_count = 0
         self.force = force
         self.batch_size = batch_size
@@ -67,12 +69,38 @@ class DiagParser(object):
         for log in (f for f in os.listdir(dir_path)
                     if f.startswith(DIAG_LOGFILE_PREFIX) and f.endswith(DIAG_LOGFILE_EXT)):
             f = os.path.join(dir_path, log)
-            print("Found ", f)
+            print("Found diagnostics log ", f)
             try:
                 with open(f, 'r') as trace_lines:
-                    self._process_file(dir_path.split("/")[-2], log, enumerate(trace_lines))
+                    # diagnostic files are located under the individual node dir under the diagnostics root dir
+                    self._process_diag_logfile(dir_path.split("/")[-2], log, enumerate(trace_lines))
             except PermissionError as e:
                 print(e)
+
+        if self.dstat:
+            for dstat in (f for f in os.listdir(dir_path) if f.endswith(DSTAT_LOGFILE_EXT)):
+                f = os.path.join(dir_path, dstat)
+                print("Found dstat log ", f)
+                try:
+                    with open(f) as csvfile:
+                        dstat_reader = csv.reader(csvfile, delimiter=',')
+
+                        node = None
+                        for row in dstat_reader:
+                            if len(row) == 0:
+                                continue
+
+                            if row[0] == 'Host:':
+                                node = row[1]
+                                break
+
+                        for row in dstat_reader:
+                            # dstat files are located directly under the simulator root output dir
+                            benchmark_id = dir_path.split("/")[-1]
+                            self._process_dstat_line(benchmark_id, node, row)
+
+                except PermissionError as e:
+                    print(e)
 
         if self.recursive:
             for path in (os.path.join(dir_path, f) for f in os.listdir(dir_path)):
@@ -87,11 +115,27 @@ class DiagParser(object):
                 except PermissionError as e:
                     print(e)
 
-    def _process_file(self, benchmark_id, log, lines_enumerator):
+    def _process_dstat_line(self, benchmark_id, node, row):
+        # ['epoch', 'memory usage', '', '', '', 'total cpu usage', '', '', '', '', '', 'dsk/total', '', 'net/total', '', 'paging', '', 'system', '', 'load avg', '', '']
+        # ['epoch', 'used', 'buff', 'cach', 'free', 'usr', 'sys', 'idl', 'wai', 'hiq', 'siq', 'read', 'writ','recv', 'send', 'in', 'out', 'int', 'csw', '1m', '5m', '15m']
+        #       0 ,     1 ,     2 ,     3 ,     4 ,    5 ,    6 ,    7 ,    8 ,    9 ,   10 ,    11 ,    12 ,   13 ,    14 ,  15 ,   16 ,   17 ,   18 ,  19 ,  20 ,  21
+
+        # Skip not expected lines
+        if len(row) != 22 or row[0] == 'epoch':
+            return
+
+        timestamp = time.strftime(INFLUX_TS_FORMAT, time.gmtime(float(row[0])))
+        net_rcv = float(row[13])
+        net_snd = float(row[14])
+
+        rcv_meta = {'unit': 'bytes', 'metric': 'net.rcv'}
+        snd_meta = {'unit': 'bytes', 'metric': 'net.snd'}
+
+        self._push_metric(benchmark_id, node, timestamp, rcv_meta, net_rcv)
+        self._push_metric(benchmark_id, node, timestamp, snd_meta, net_snd)
+
+    def _process_diag_logfile(self, benchmark_id, log, lines_enumerator):
         cycle = {}
-        RUN = lambda cycle: (
-            self._apply_transformations(cycle),
-            self._push_collection(benchmark_id, cycle))
 
         for i, line in lines_enumerator:
             try:
@@ -101,7 +145,7 @@ class DiagParser(object):
                         cycle['tick'] = timestamp
 
                     if timestamp != cycle['tick']:
-                        RUN(cycle)
+                        self._transform_and_push(benchmark_id, cycle)
                         cycle = {}
                     else:
                         self._group_metric_with_same_timestamp(cycle, nodename, timestamp, meta, value)
@@ -113,13 +157,17 @@ class DiagParser(object):
 
         # Remaining
         try:
-            if len(cycle) is 0:
+            if len(cycle) == 0:
                 return
 
-            RUN(cycle)
+            self._transform_and_push(benchmark_id, cycle)
         except Exception as e:
             print("Problem sending metric ", log, line)
             print(e)
+
+    def _transform_and_push(self, benchmark_id, cycle):
+        self._apply_transformations(cycle),
+        self._push_collection(benchmark_id, cycle)
 
     def _parse_metric_line(self, log_file, line):
         timestamp = DiagParser.extract_timestamp(line)
@@ -146,11 +194,10 @@ class DiagParser(object):
                 meta = {'unit': 'avg', 'metric': 'wan.publishLatencyAvg'}
                 cycle['wan.publishLatencyAvg'] = (nodename, cycle['tick'], meta, value)
 
-
     def _push_collection(self, benchmark_id, cycle):
         for entry in cycle:
             # Ignore the timestamp entry, its not a metric
-            if entry is not "tick":
+            if entry != "tick":
                 node_name, timestamp, meta, value = cycle[entry]
                 self._push_metric(benchmark_id, node_name, timestamp, meta, value)
 
@@ -180,9 +227,11 @@ class DiagParser(object):
         fields[meta.get('unit', 'count')] = value
         payload['fields'] = fields
 
-        tags = dict()
-        if meta.get('thread'):
-            tags['thread'] = meta.get('thread')
+        if 'unit' in meta:
+            del meta['unit']
+        del meta['metric']
+
+        tags = meta
 
         tags['benchmark'] = benchmark_id
         tags['node'] = node_name
@@ -222,6 +271,8 @@ parser.add_argument('--force', default=False, action='store_true',
                     help='re-process directories previously marked as done')
 parser.add_argument('--recursive', default=False, action='store_true',
                     help='scan the directory recursively')
+parser.add_argument('--dstat-csv', default=False, action='store_true',
+                    help='include dstat files from simulator output')
 parser.add_argument('--db_host', nargs='?', default='127.0.0.1', help='InfluxDB host')
 parser.add_argument('--db_port', nargs='?', default=8086, type=int, help='InfluxDB port')
 parser.add_argument('--db_name', nargs='?', default='diagnostics',
@@ -235,8 +286,7 @@ parser.add_argument('--normalize', default=False, action='store_true',
 
 args = parser.parse_args()
 
-parser = DiagParser(root_dir=args.dir, recursive=args.recursive, db_host=args.db_host, db_port=args.db_port,
-                    force=args.force, db_name=args.db_name, batch_size=args.batch_size, import_id=args.import_id,
-                    normalize=args.normalize)
+parser = DiagParser(root_dir=args.dir, recursive=args.recursive, dstat=args.dstat_csv, db_host=args.db_host,
+                    db_port=args.db_port, force=args.force, db_name=args.db_name, batch_size=args.batch_size,
+                    import_id=args.import_id, normalize=args.normalize)
 parser.run()
-
