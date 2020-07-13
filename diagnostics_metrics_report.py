@@ -134,6 +134,34 @@ class DiagParser(object):
         self._push_metric(benchmark_id, node, timestamp, rcv_meta, net_rcv)
         self._push_metric(benchmark_id, node, timestamp, snd_meta, net_snd)
 
+        mem_used = float(row[1])
+        mem_used_meta = {'unit': 'bytes', 'metric': 'mem.used'}
+        self._push_metric(benchmark_id, node, timestamp, mem_used_meta, mem_used)
+
+        mem_buff = float(row[2])
+        mem_buff_meta = {'unit': 'bytes', 'metric': 'mem.buff'}
+        self._push_metric(benchmark_id, node, timestamp, mem_buff_meta, mem_buff)
+
+        mem_cache = float(row[3])
+        mem_cache_meta = {'unit': 'bytes', 'metric': 'mem.cache'}
+        self._push_metric(benchmark_id, node, timestamp, mem_cache_meta, mem_cache)
+
+        mem_free = float(row[4])
+        mem_free_meta = {'unit': 'bytes', 'metric': 'mem.free'}
+        self._push_metric(benchmark_id, node, timestamp, mem_free_meta, mem_free)
+
+        cpu_usr = float(row[5])
+        cpu_usr_meta = {'unit': 'pct', 'metric': 'cpu.usr'}
+        self._push_metric(benchmark_id, node, timestamp, cpu_usr_meta, cpu_usr)
+
+        cpu_sys = float(row[6])
+        cpu_sys_meta = {'unit': 'pct', 'metric': 'cpu.sys'}
+        self._push_metric(benchmark_id, node, timestamp, cpu_sys_meta, cpu_sys)
+
+        cpu_idl = float(row[7])
+        cpu_idl_meta = {'unit': 'pct', 'metric': 'cpu.idl'}
+        self._push_metric(benchmark_id, node, timestamp, cpu_idl_meta, cpu_idl)
+
     def _process_diag_logfile(self, benchmark_id, log, lines_enumerator):
         cycle = {}
 
