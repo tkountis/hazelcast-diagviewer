@@ -215,12 +215,21 @@ class DiagParser(object):
 
     def _apply_transformations(self, cycle):
         if 'wan.totalPublishLatency' in cycle and 'wan.totalPublishedEventCount' in cycle:
-            nodename, _, _, total_pub_latency = cycle['wan.totalPublishLatency']
+            nodename, _, other_meta, total_pub_latency = cycle['wan.totalPublishLatency']
             _, _, _, total_pub_count = cycle['wan.totalPublishedEventCount']
             if total_pub_count and total_pub_latency:
                 value = total_pub_latency / total_pub_count
-                meta = {'unit': 'avg', 'metric': 'wan.publishLatencyAvg'}
+                meta = {'unit': 'avg', 'metric': 'wan.publishLatencyAvg', 'publisherId': other_meta['publisherId'], 'replication': other_meta['replication']}
                 cycle['wan.publishLatencyAvg'] = (nodename, cycle['tick'], meta, value)
+
+        if 'map.putCount' in cycle and 'map.totalPutLatency' in cycle:
+            nodename, _, other_meta, total_put_latency = cycle['map.totalPutLatency']
+            _, _, _, total_put_count = cycle['map.putCount']
+            if total_put_count and total_put_latency:
+                value = total_put_latency / total_put_count
+                meta = {'unit': 'avg', 'metric': 'map.putLatencyAvg', 'name': other_meta['name']}
+                cycle['map.putLatencyAvg'] = (nodename, cycle['tick'], meta, value)
+
 
     def _push_collection(self, benchmark_id, cycle):
         for entry in cycle:
